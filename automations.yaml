@@ -1,0 +1,77 @@
+- action:
+  - entity_id: light.level
+    service: homeassistant.turn_on
+  alias: Kveikja ljós í anddyri
+  trigger:
+  - entity_id: binary_sensor.fibaro_motion_sensor_sensor
+    platform: state
+    to: 'on'
+
+- alias: Slökkva ljós í anddyri eftir mínútu
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.fibaro_motion_sensor_sensor
+    to: 'off'
+    for:
+      minutes: 1
+  action:
+    - service: homeassistant.turn_off
+      entity_id: light.level
+
+- alias: Stefán farinn út
+  trigger:
+  - platform: state
+    to: 'not_home'
+    from: 'home'
+    entity_id: device_tracker.Stefan
+  action:
+    - service: notify.push
+      data:
+        title: Farinn út
+        message: Mundu að kveikja á Blink
+
+- alias: Stefán kominn heim
+  trigger:
+  - platform: state
+    to: 'home'
+    from: 'not_home'
+    entity_id: device_tracker.Stefan
+  action:
+    - service: blink.arm_system
+      data:
+         device_armed: False
+
+- alias: Sibba komin heim
+  trigger:
+  - platform: state
+    to: 'home'
+    from: 'not_home'
+    entity_id: device_tracker.Sibba_S7
+  action:
+    - service: blink.arm_system
+      data:
+         device_armed: False
+         
+- alias: Bílskúr opinn
+  trigger:
+  - platform: state
+    to: 'on'
+    from: 'off'
+    entity_id: binary_sensor.door_window_sensor_158d000205b5d0
+  - platform: state
+    to: 'on'
+    from: 'off'
+    entity_id: binary_sensor.door_window_sensor_158d0002049831
+  - platform: state
+    to: 'on'
+    from: 'off'
+    entity_id: binary_sensor.door_window_sensor_158d0002049670
+  - platform: state
+    to: 'on'
+    from: 'off'
+    entity_id: binary_sensor.door_window_sensor_158d0002049581
+  action:
+    - service: notify.push
+      data:
+        title: Bílskúr opnaður
+        message: Bílskúr opnaður
