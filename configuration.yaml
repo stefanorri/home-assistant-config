@@ -104,6 +104,6 @@ xiaomi_aqara:
             key: !secret xiaomi_key
 
 namecheapdns:
-  domain: !secret krili.net
-  host: !secret heima
+  domain: !secret namecheap_ddns_domain
+  host: !secret namecheap_ddns_host
   password: !secret namecheap_ddns_password
