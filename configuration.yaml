@@ -24,7 +24,7 @@ config:
 
 http:
   # Secrets are defined in the file secrets.yaml
-  # api_password: !secret http_password
+  api_password: !secret http_password
   # Uncomment this if you are using SSL/TLS, running in Docker container, etc.
   # base_url: example.duckdns.org:8123
 
@@ -76,15 +76,15 @@ zwave:
 
 #Blink cameras
 blink:
-  username: asdf
-  password: asdfsadf
+  username: !secret blink_username
+  password: !secret blink_password
 
 #Router
 device_tracker:
   - platform: asuswrt
     host: 192.168.1.1
-    username: asdf
-    password: asdfasdf
+    username: !secret asus_username
+    password: !secret asus_password
     interval_seconds: 10
     consider_home: 180
     new_device_defaults:
@@ -95,10 +95,15 @@ device_tracker:
 notify:
   - name: Push
     platform: pushbullet
-    api_key: 'asdf'
+    api_key: !secret pushbullet_key
 
 xiaomi_aqara:
   discovery_retry: 5
   gateways:
-          - mac: 123
-            key: asdf
+          - mac: !secret xiaomi_mac
+            key: !secret xiaomi_key
+
+namecheapdns:
+  domain: !secret krili.net
+  host: !secret heima
+  password: !secret namecheap_ddns_password
